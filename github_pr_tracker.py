@@ -110,6 +110,8 @@ class GitHubPRTracker:
                     continue
                 
                 closed_dt = date_parser.parse(closed_at)
+                if closed_dt.tzinfo is not None:
+                    closed_dt = closed_dt.replace(tzinfo=None)
                 if start_dt <= closed_dt < end_dt:
                     filtered_prs.append(pr)
                 elif closed_dt < start_dt:
